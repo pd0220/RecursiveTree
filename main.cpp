@@ -8,7 +8,9 @@
 #include <random>
 
 // size of tree
-int const N = 1000;
+int const N{1000};
+// file name to save results
+std::string const fileName{"data.txt"};
 
 // choose a random integer from given [0, high] interval uniformly
 auto ChooseNode = [](int const &high) {
@@ -28,9 +30,18 @@ auto ChooseNode = [](int const &high) {
 // addig a new node to the recursive tree
 auto AddNode = [&](std::vector<int> &Nodes) {
     // randomly increase one node degree with 1
-    Nodes[ChooseNode(static_cast<int>(Nodes.size()) - 1)];
+    Nodes[ChooseNode(static_cast<int>(Nodes.size()) - 1)] += 1;
     // add new node
     Nodes.push_back(1);
+};
+
+// write final graph to file
+auto WriteToFile = [&](std::vector<int> const &Nodes) {
+    std::ofstream data;
+    data.open(fileName);
+    for (int i{0}; i < N; i++)
+        data << Nodes[i] << std::endl;
+    data.close();
 };
 
 // main funcion
@@ -41,12 +52,9 @@ int main(int, char **)
     std::vector<int> Nodes(2, 1);
 
     // simulate node dynamics
-    for (int i{1}; i < N; i++)
+    for (int i{2}; i < N; i++)
         AddNode(Nodes);
 
     // write to file final graph
-    std::ofstream data;
-    data.open("data.txt");
-    for (int i{1}; i < N; i++)
-        data << Nodes[i] << std::endl;
+    WriteToFile(Nodes);
 }
