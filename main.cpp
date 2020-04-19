@@ -8,7 +8,7 @@
 #include <random>
 
 // size of tree
-int const N{1000};
+int const N{(int)1e4};
 // file name to save results
 std::string const fileName{"data.txt"};
 
